@@ -727,8 +727,10 @@ export default class Sotez extends AbstractTezModule implements TezInterface {
           }
         }
         if (errors.length) {
+          const err = new Error('Operation Failed')
           // @ts-ignore
-          throw new Error({ error: 'Operation Failed', errors });
+          err.errors = errors
+          throw err
         }
         return this.query('/injection/operation', sopbytes);
       }).then(hash => ({
